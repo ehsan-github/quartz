@@ -2,9 +2,8 @@ import React from 'react';
 import { themes } from '@storybook/theming';
 import { useDarkMode } from 'storybook-dark-mode';
 
-
 import ThemeProvider from '../src/theme/ThemeProvider';
-
+import defaultTheme from '../src/theme/theme';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -14,7 +13,10 @@ export const parameters = {
     current: 'light',
     dark: { ...themes.dark, appBg: themes.dark.appBg },
     light: { ...themes.light, appBg: themes.light.appBg },
-  }
+  },
+  chakra: {
+    theme: defaultTheme,
+  },
 };
 
 export const decorators = [

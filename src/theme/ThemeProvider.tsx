@@ -1,6 +1,7 @@
 import React, { createContext, FC, useEffect, useMemo, useState } from 'react';
 import { Global, css } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import defaultTheme, { darkTheme } from './theme';
 
@@ -28,6 +29,10 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
   );
 
   const colorModeToUse = colorModeFromProps ?? colorMode; // the outer one overrides inner state
+  const theme = useMemo(
+    () => extendTheme(colorModeToUse === 'light' ? defaultTheme : darkTheme),
+    [colorModeToUse],
+  );
 
   return (
     <React.Fragment>
@@ -41,7 +46,7 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
         <EmotionThemeProvider
           theme={colorModeToUse === 'light' ? defaultTheme : darkTheme}
         >
-          {children}
+          <ChakraProvider theme={theme}>{children}</ChakraProvider>
         </EmotionThemeProvider>
       </ColorModeContext.Provider>
     </React.Fragment>
